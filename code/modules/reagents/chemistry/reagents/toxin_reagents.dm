@@ -299,6 +299,22 @@
 			continue
 		data += dna
 
+/obj/item/paper/guides/carnivorous_blood
+	name = "Thank you for your purchase!"
+	default_raw_text = "We thank you for your purchase of a sample of Carnivorous Blood for your \[MEDICAL RESEARCH\].\
+	<br>We at Interdyne Pharmaceuticals love to see passion for the field of \[BLOODOLOGY\].\
+	<br>We hope to see you succeed in your goal of \[JUSTGIVEIT\].\
+	<br>Please exercise caution. Interdyne Pharmaceuticals is not responsible for bodily harm caused by the substance.\
+	<br>\
+	<br>☣BIOHAZARD WARNING☣\
+	<ul>\
+	<li>NEVER allow Carnivorous Blood to enter a living being's bloodstream. The substance has been found to rapidly deplete blood cell counts.\
+	<li>NEVER mix Carnivorous Blood with actual blood outside a living being. Doing so will greatly increase the risk to the blood's donor if the substance finds itself within their bloodstream.\
+	<li>If three or more beings have had their blood mixed with a sample of Carnivorous Blood, this additional risk no longer applies, though the sample should be disposed of immediately.\
+	<li>NEVER mix liquified meat, or any other high-protein liquid, with Carnivorous Blood. Doing so will cause the substance to rapidly self-replicate.\
+	</ul>\
+	"
+
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
@@ -1640,7 +1656,7 @@
 	. = ..()
 	var/merged_total = amount + volume
 	if(merged_total >= CRITICAL_CAPACITY)
-		spew_waste(round(volume / WASTE_REACTION_THRESHOLD * 2)) //Sure as HELL can't store it.
+		spew_waste(round(volume / (WASTE_REACTION_THRESHOLD * 2)), merged_total) //Sure as HELL can't store it.
 		var/atom/container = holder.my_atom
 		var/damage_mult = 1
 		if(ismachinery(container))
@@ -1677,7 +1693,6 @@
 
 	if(goo.lazy_init_reagents())
 		goo.reagents.maximum_volume = min(goo.reagents.maximum_volume + rounded_volume, 300)
-		goo.reagents.add_reagent(type, rounded_volume)
 	if(goo.reagents.has_reagent(type, WASTE_REACTION_THRESHOLD))
 		goo.pre_dissolve()
 		return // Otherwise there's too little waste to do anything.
@@ -1695,10 +1710,11 @@
 /**
  * Pick a random turf in the spew range and split our total amount of waste there.
  */
-/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1)
+/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1, total_toxins)
 	if(!spew_range)
 		return
-
+	if(!holder.my_atom)
+		return
 	var/atom/atom_holder = holder.my_atom
 	var/turf/dropturf = get_turf(atom_holder)
 	if(!dropturf)

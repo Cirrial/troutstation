@@ -18,7 +18,7 @@
 	maximum_survivable_temperature = 450
 	fire_stack_decay_rate = -5 // todo: self-extinguish behaviour for all flock mobs
 	pressure_resistance = 50
-	damage_coeff = list(BRUTE = 1.1, BURN = 0.9, TOX = 0, STAMINA = 0.8, OXY = 0)
+	physiology = list(BRUTE = 1.1, BURN = 0.9, TOX = 0, STAMINA = 0.8, OXY = 0)
 	unique_name = TRUE
 	initial_language_holder = /datum/language_holder/flock
 	death_message = "cracks and splinters, falling over."

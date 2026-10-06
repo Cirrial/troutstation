@@ -84,6 +84,8 @@
 #define MODE_TTS_IDENTIFIER "tts_identifier"
 /// Override the mob's name
 #define MODE_SPEAKER_NAME_OVERRIDE "speaker_name_override"
+/// Override the mob's gender
+#define MODE_SPEAKER_GENDER_OVERRIDE "speaker_gender_override"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
@@ -103,6 +105,7 @@
 // Troutstation edit
 #define SPAN_FLOCK "flock"
 
+#define SPAN_REVENWARNING "revenwarning"
 //bitflag #defines for return value of the radio() proc.
 /// Makes the message use italics
 #define ITALICS (1<<0)
