@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(relic_nodes_scanned)
 
 /obj/item/relicanalyzer/proc/get_examine_text()
 	var/text
-	var/obj/item/relic/R = last_scanned?.resolve()
+	var/obj/item/assembly/relic/R = last_scanned?.resolve()
 	if (!R || !R.current_node)
 		text += "\nThe analyzer isn't linked to any relic yet."
 		return text
@@ -62,10 +62,10 @@ GLOBAL_LIST_EMPTY(relic_nodes_scanned)
 	return
 
 /obj/item/relicanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/item/relic))
+	if(!istype(interacting_with, /obj/item/assembly/relic))
 		return NONE
 
-	var/obj/item/relic/R = interacting_with
+	var/obj/item/assembly/relic/R = interacting_with
 
 	. = ITEM_INTERACT_SUCCESS
 

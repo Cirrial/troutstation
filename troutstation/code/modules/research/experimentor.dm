@@ -57,7 +57,7 @@
 /datum/relic_node
 	var/node_id
 	var/list/datum/relic_trans/relic_transes = list()
-	var/obj/item/relic/parent_relic
+	var/obj/item/assembly/relic/parent_relic
 	var/desc = ""
 
 /datum/relic_node/proc/on_generate()
@@ -77,12 +77,12 @@
 			parent_relic.reacting_when_off_cooldown = TRUE
 		return
 	parent_relic.reacting_when_off_cooldown = FALSE
-	COOLDOWN_START(parent_relic, cooldown, parent_relic.cooldown_timer)
+	COOLDOWN_START(parent_relic, cooldown, parent_relic.activation_cooldown)
 	reaction_power(user)
 	// Give time for other reactions to happen before procing none
 	if (HAS_TRAIT(src, TRAIT_IRRADIATED))
-		addtimer(CALLBACK(src, PROC_REF(check_trans), null, /datum/relic_trans/irradiate), parent_relic.cooldown_timer + 0.1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(check_trans), user, /datum/relic_trans/none), parent_relic.cooldown_timer + 5.0 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(check_trans), null, /datum/relic_trans/irradiate), parent_relic.activation_cooldown + 0.1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_trans), user, /datum/relic_trans/none), parent_relic.activation_cooldown + 5.0 SECONDS)
 
 
 /datum/relic_node/proc/check_trans(mob/user, react_type, ...)
@@ -577,7 +577,7 @@
 	var/danger_zone = pick(GLOB.all_body_zones)
 	parent_relic.force_embed(poor_sob, danger_zone)
 
-/obj/item/relic
+/obj/item/assembly/relic
 	desc = "What mysteries could this hold? Maybe Research & Development knows how to analyze it...."
 	//Minimum possible cooldown.
 	min_cooldown = 2 SECONDS
@@ -633,7 +633,7 @@
 		/datum/relic_trans/mouseover= 10,
 	)
 
-/obj/item/relic/Initialize()
+/obj/item/assembly/relic/Initialize()
 	. = ..()
 	existing_relics.Add(src)
 	RegisterSignal(src, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emped))
@@ -647,32 +647,32 @@
 	RegisterSignal(src, COMSIG_ITEM_UNEMBEDDED, PROC_REF(on_unembedded))
 	RegisterSignal(src, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 
-/obj/item/relic/Destroy(force)
+/obj/item/assembly/relic/Destroy(force)
 	existing_relics.Remove(src)
 	for (var/each as anything in relic_nodes)
 		QDEL_NULL(each)
 	. = ..()
 
-/obj/item/relic/random_themed_appearance() // TODO: rewrite the original so adding shit is easier
+/obj/item/assembly/relic/random_themed_appearance() // TODO: rewrite the original so adding shit is easier
 	. = ..()
 	if (prob(1))
 		icon = 'troutstation/icons/obj/devices/artefacts.dmi'
 		icon_state = "plushie_archytas"
 	update_appearance()
 
-/obj/item/relic/proc/on_emped(severity, protection)
+/obj/item/assembly/relic/proc/on_emped(severity, protection)
 	SIGNAL_HANDLER
 	current_node?.check_trans(null, /datum/relic_trans/emp)
 	if (!activated)
 		reveal()
 	return
 
-/obj/item/relic/proc/on_fired(exposed_temperature, exposed_volume)
+/obj/item/assembly/relic/proc/on_fired(exposed_temperature, exposed_volume)
 	SIGNAL_HANDLER
 	current_node?.check_trans(null, /datum/relic_trans/heat)
 	return
 
-/obj/item/relic/proc/on_clicked(atom/source, mob/user, obj/item/item)
+/obj/item/assembly/relic/proc/on_clicked(atom/source, mob/user, obj/item/item)
 	SIGNAL_HANDLER
 	if(item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		balloon_alert(user, "The heat transfer warms [src].")
@@ -686,39 +686,39 @@
 		return ITEM_INTERACT_SUCCESS
 	return
 
-/obj/item/relic/proc/on_hit_react(datum/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
+/obj/item/assembly/relic/proc/on_hit_react(datum/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 	SIGNAL_HANDLER
 	current_node?.check_trans(owner, /datum/relic_trans/harm, owner)
 	return
 
-/obj/item/relic/proc/on_painted()
+/obj/item/assembly/relic/proc/on_painted()
 	SIGNAL_HANDLER
 	current_node?.check_trans(null, /datum/relic_trans/paint)
 	return
 
-/obj/item/relic/proc/on_exposure(list/lists, /datum/reagents/the_reagents, methods, volume_modifier, show_message)
+/obj/item/assembly/relic/proc/on_exposure(list/lists, /datum/reagents/the_reagents, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 	current_node?.check_trans(null, /datum/relic_trans/reagent)
 	return
 
-/obj/item/relic/proc/on_radiated()
+/obj/item/assembly/relic/proc/on_radiated()
 	SIGNAL_HANDLER
 	current_node?.check_trans(null, /datum/relic_trans/irradiate)
 	return
 
-/obj/item/relic/proc/on_embedded(victim, target_limb)
+/obj/item/assembly/relic/proc/on_embedded(victim, target_limb)
 	SIGNAL_HANDLER
 	embedded_mob = victim
 	embedded_limb = target_limb
 	return
 
-/obj/item/relic/proc/on_unembedded(victim, target_limb)
+/obj/item/assembly/relic/proc/on_unembedded(victim, target_limb)
 	SIGNAL_HANDLER
 	embedded_mob = null
 	embedded_limb = null
 	return
 
-/obj/item/relic/proc/handle_hearing(datum/source, list/hearing_args)
+/obj/item/assembly/relic/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 	if (hearing_args[HEARING_SPEAKER] == src || get_dist(src, hearing_args[HEARING_SPEAKER]) > canhear_range || hearing_args[HEARING_MESSAGE_MODE][MODE_RELAY])
 		return .
@@ -726,7 +726,7 @@
 	current_node?.check_trans(null, /datum/relic_trans/hear)
 	return
 
-/obj/item/relic/MouseEntered(location, control, params)
+/obj/item/assembly/relic/MouseEntered(location, control, params)
 	. = ..()
 	if (current_node != null)
 		current_node?.check_trans(null, /datum/relic_trans/mouseover)
@@ -735,7 +735,7 @@
 // - Creates 3-15 nodes
 // - Each node has 2-4 connections
 // - Orphaned nodes are given a connection (this can break limits)
-/obj/item/relic/proc/generate()
+/obj/item/assembly/relic/proc/generate()
 	become_hearing_sensitive(INNATE_TRAIT)
 	var/list/datum/relic_node/not_orphaned = list()
 	// Generate nodes up to limit
@@ -783,7 +783,7 @@
 
 ///Overrides for base methods
 
-/obj/item/relic/attack_hand(mob/user, list/modifiers)
+/obj/item/assembly/relic/attack_hand(mob/user, list/modifiers)
 	if (!activated)
 		return ..()
 	var/mob/living/living_user = user
@@ -808,7 +808,7 @@
 		current_node?.check_trans(user, /datum/relic_trans/touch)
 	return ..()
 
-/obj/item/relic/attack_self(mob/user)
+/obj/item/assembly/relic/attack_self(mob/user)
 	if(!activated)
 		to_chat(user, span_notice("[desc]"))
 		return //..()
@@ -822,7 +822,7 @@
 		current_node?.check_trans(user, /datum/relic_trans/touch)
 	return //..()
 
-/obj/item/relic/attack(mob/M, mob/user)
+/obj/item/assembly/relic/attack(mob/M, mob/user)
 	if(!activated)
 		to_chat(user, span_notice("[desc]"))
 		return ..()
@@ -836,22 +836,22 @@
 		current_node?.check_trans(user, /datum/relic_trans/harm, M)
 	return ..()
 
-/obj/item/relic/ex_act(severity, target)
+/obj/item/assembly/relic/ex_act(severity, target)
 	current_node?.check_trans(null, /datum/relic_trans/explode)
 	return
 
-/obj/item/relic/Destroy(force)
+/obj/item/assembly/relic/Destroy(force)
 	for (var/each as anything in relic_nodes)
 		QDEL_NULL(each)
 	. = ..()
 
-/obj/item/relic/reveal()
+/obj/item/assembly/relic/reveal()
 	if(activated) //no rerolling
 		return
 	activated = TRUE
 	name = real_name
-	if(!cooldown_timer)
-		cooldown_timer = rand(min_cooldown, max_cooldown)
+	if(!activation_cooldown)
+		activation_cooldown = rand(min_cooldown, max_cooldown)
 	generate()
 
 /datum/embedding/relic
@@ -863,7 +863,7 @@
 	name = "Spare Relic Dodads"
 	desc = "We have zero clue what these do, and frankly they're piling up. Could you take some off our hands?"
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/item/relic = 3, /obj/item/pinpointer/relic = 1, /obj/item/relicanalyzer = 1)
+	contains = list(/obj/item/assembly/relic = 3, /obj/item/pinpointer/relic = 1, /obj/item/relicanalyzer = 1)
 	crate_name = "Spare Relics Crate"
 	crate_type = /obj/structure/closet/crate/trashcart
 
@@ -871,6 +871,6 @@
 	name = "Relic Grab Bag"
 	desc = "We need these unknown objects researched, please buy a few from the stockpile. Please."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/relic = 3)
+	contains = list(/obj/item/assembly/relic = 3)
 	crate_name = "Relic Grab Bag"
 	crate_type = /obj/structure/closet/crate/science

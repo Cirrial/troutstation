@@ -21,8 +21,9 @@
 		/obj/item/stack/rods, // kebab
 		/obj/item/paper/paperslip/fortune, // fortune cookie
 		/obj/item/dice/fudge, // /obj/item/food/fudgedice
+		/obj/item/wendigo_skull, // you get back the wendigo skull as it mostly acts as bowl.
 		// Troutstation edit
-		/obj/item/reagent_containers/cup/glass/drinkingglass // /obj/item/food/float_your_goat
+		/obj/item/reagent_containers/cup/glass/drinkingglass, // /obj/item/food/float_your_goat
 	)
 
 	for(var/path in subtypesof(/obj/item/food))

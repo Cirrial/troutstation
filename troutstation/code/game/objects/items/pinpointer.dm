@@ -13,7 +13,7 @@
 	custom_materials = list(/datum/material/iron = 58, /datum/material/glass = 7) // based on ingredients
 	var/scan_type = SCAN_SWEEP
 
-/obj/item/pinpointer/relic/proc/trackable(obj/item/relic/R)
+/obj/item/pinpointer/relic/proc/trackable(obj/item/assembly/relic/R)
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(R)
 	if(here && there && (there.z == here.z || (is_station_level(here.z) && is_station_level(there.z)))) // Device and target should be on the same level or different levels of the same station
@@ -32,17 +32,17 @@
 /obj/item/pinpointer/relic/scan_for_target()
 	switch(scan_type)
 		if (SCAN_SINGLE)
-			if (target && istype(target, /obj/item/relic))
-				var/obj/item/relic/target_relic = target
+			if (target && istype(target, /obj/item/assembly/relic))
+				var/obj/item/assembly/relic/target_relic = target
 				target_relic.current_node.check_trans(null, /datum/relic_trans/tracked)
 				if (istype(target_relic.current_node, /datum/relic_node/emp))
 					target = null
 		else
 			var/turf/here = get_turf(src)
-			if (here && /obj/item/relic::existing_relics.len > 0)
-				var/obj/item/relic/target_relic = null;
+			if (here && /obj/item/assembly/relic::existing_relics.len > 0)
+				var/obj/item/assembly/relic/target_relic = null;
 				var/dist_to_beat = 1000000;
-				for (var/obj/item/relic/relic_inst as anything in /obj/item/relic::existing_relics)
+				for (var/obj/item/assembly/relic/relic_inst as anything in /obj/item/assembly/relic::existing_relics)
 					if (target_relic == relic_inst)
 						continue
 					var/turf/there = get_turf(relic_inst)
@@ -57,10 +57,10 @@
 						target = null
 					else
 						target = target_relic
-	return (target && istype(target, /obj/item/relic) && trackable(target))
+	return (target && istype(target, /obj/item/assembly/relic) && trackable(target))
 
 /obj/item/pinpointer/relic/pre_attack(atom/O, mob/user, list/modifiers)
-	if (istype(O, /obj/item/relic))
+	if (istype(O, /obj/item/assembly/relic))
 		scan_type = SCAN_SINGLE
 		target = O
 		balloon_alert(user, "The pinpointer starts tracking [O].")

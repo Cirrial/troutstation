@@ -6,6 +6,7 @@
 	name = "candy"
 	desc = "It's nougat, love it or hate it."
 	icon_state = "candy"
+	inhand_icon_state = "candy"
 	trash_type = /obj/item/trash/candy
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 1,
@@ -89,6 +90,7 @@
 	name = "chips"
 	desc = "Commander Riker's What-The-Crisps."
 	icon_state = "chips"
+	inhand_icon_state = "chips"
 	trash_type = /obj/item/trash/chips
 	bite_consumption = 1
 	food_reagents = list(
@@ -234,6 +236,19 @@
 	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
+/obj/item/food/nutrient_bar
+	name = "\improper Nutrient Bar"
+	icon_state = "nutrientbar"
+	desc = "A nutrieeint rich bar from inozhakust mash, with just enough sugar to not taste utterly horrid."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/sugar = 3,
+	)
+	tastes = list("cardboard" = 3, "sugar" = 2)
+	foodtypes = VEGETABLES
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/peanuts
 	name = "\improper Gallery's peanuts"
