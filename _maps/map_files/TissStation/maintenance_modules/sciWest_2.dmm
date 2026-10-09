@@ -579,7 +579,7 @@
 /area/station/science/research/abandoned)
 "Ft" = (
 /obj/structure/table/reinforced,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/item/assembly/prox_sensor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,

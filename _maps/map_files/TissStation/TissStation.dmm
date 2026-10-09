@@ -22822,7 +22822,7 @@
 "gVZ" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/science/robotics/augments)
@@ -40379,7 +40379,7 @@
 /obj/effect/spawner/random/entertainment/plushie_delux{
 	pixel_x = 4
 	},
-/obj/item/relic{
+/obj/item/assembly/relic{
 	pixel_x = -8
 	},
 /turf/open/floor/plating,
@@ -45546,8 +45546,8 @@
 	pixel_x = 6;
 	pixel_y = 13
 	},
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics/lab)
 "nBy" = (
