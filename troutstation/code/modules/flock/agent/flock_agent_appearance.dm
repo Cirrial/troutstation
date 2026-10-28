@@ -14,11 +14,11 @@
 		update_worn_head()
 	if(slot_flags & ITEM_SLOT_HANDS)
 		update_held_items()
-	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_DEX_STORAGE))
+	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_SUITSTORE))
 		update_inv_internal_storage()
 
 /mob/living/basic/flock/agent/proc/update_inv_internal_storage()
-	hud_used?.update_inventory_slot(ITEM_SLOT_DEX_STORAGE)
+	hud_used?.update_inventory_slot(ITEM_SLOT_SUITSTORE)
 
 /mob/living/basic/flock/agent/update_worn_head()
 	remove_overlay(FLOCK_AGENT_HEAD_LAYER)

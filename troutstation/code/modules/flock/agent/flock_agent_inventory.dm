@@ -22,7 +22,7 @@
 			if(!((item.slot_flags & ITEM_SLOT_HEAD) || (item.slot_flags & ITEM_SLOT_MASK)))
 				return FALSE
 			return TRUE
-		if(ITEM_SLOT_DEX_STORAGE)
+		if(ITEM_SLOT_SUITSTORE)
 			if(internal_storage)
 				return FALSE
 			if(item.w_class > WEIGHT_CLASS_NORMAL)
@@ -36,13 +36,13 @@
 	switch(slot_id)
 		if(ITEM_SLOT_HEAD)
 			return head
-		if(ITEM_SLOT_DEX_STORAGE)
+		if(ITEM_SLOT_SUITSTORE)
 			return internal_storage
 	return ..()
 
 /mob/living/basic/flock/agent/get_slot_by_item(obj/item/looking_for)
 	if(internal_storage == looking_for)
-		return ITEM_SLOT_DEX_STORAGE
+		return ITEM_SLOT_SUITSTORE
 	if(head == looking_for)
 		return ITEM_SLOT_HEAD
 	return ..()
@@ -69,7 +69,7 @@
 		if(ITEM_SLOT_HEAD)
 			head = equipping
 			update_worn_head()
-		if(ITEM_SLOT_DEX_STORAGE)
+		if(ITEM_SLOT_SUITSTORE)
 			internal_storage = equipping
 			if(!is_creating)
 				playsound(get_turf(src), 'troutstation/sound/items/handling/flock_agent_storage_rustle.ogg', 40, TRUE, -5)
@@ -86,9 +86,6 @@
 			return
 
 	has_equipped(equipping, slot)
-
-/mob/living/basic/flock/agent/getBackSlot()
-	return ITEM_SLOT_DEX_STORAGE
 
 /mob/living/basic/flock/agent/proc/toggle_eat_mode()
 	if(stat)

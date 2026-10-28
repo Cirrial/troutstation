@@ -136,6 +136,11 @@ export const feature_cerulean_frills: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const feature_cerulean_snout: FeatureToggle = {
+  name: 'Fish snout',
+  component: CheckboxInput,
+};
+
 // Troutstation additions
 
 export const feature_anteater_tail: FeatureChoiced = {

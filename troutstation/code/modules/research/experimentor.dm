@@ -47,7 +47,7 @@
 /datum/relic_trans/hear
 	desc = "Having casual conversation."
 /datum/relic_trans/hear/on_triggered()
-	playsound(next_node.parent_relic, SFX_MUFFLED_SPEECH, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(next_node.parent_relic, /datum/sound_effect/muffled_speech, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return
 /datum/relic_trans/tracked
 	desc = "Keeping a close eye with a pinpointer."
@@ -70,7 +70,7 @@
 	parent_relic.balloon_alert(user, "[parent_relic] shows increased activity...")
 	// to_chat(user, span_warning("DEBUG: [parent_relic] is now at [node_id] : [src]"))
 	if(!COOLDOWN_FINISHED(parent_relic, cooldown))
-		playsound(parent_relic, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(parent_relic, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		parent_relic.lightning_fx(parent_relic, 1.0 SECONDS)
 		if (!parent_relic.reacting_when_off_cooldown)
 			addtimer(CALLBACK(src, PROC_REF(run_effect), user), COOLDOWN_TIMELEFT(parent_relic, cooldown))
@@ -200,7 +200,7 @@
 
 /datum/relic_node/vacuum/reaction_power(mob/user)
 	to_chat(user, span_warning("[parent_relic] absorbs gasses in the room!"))
-	playsound(parent_relic, SFX_RUSTLE, 50, TRUE, -5)
+	playsound(parent_relic, /datum/sound_effect/rustle, 50, TRUE, -5)
 	var/turf/local_turf = get_turf(parent_relic)
 	var/datum/gas_mixture/environment = local_turf.return_air()
 	environment.remove(amount)
@@ -262,7 +262,7 @@
 
 /datum/relic_node/emp/reaction_power(mob/user)
 	to_chat(user, span_warning("[parent_relic] starts sparking!"))
-	playsound(parent_relic, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(parent_relic, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	addtimer(CALLBACK(src, PROC_REF(cause_emp), user), rand(3.5 SECONDS, 6 SECONDS))
 	return
 
@@ -294,7 +294,7 @@
 				var/obj/item/stock_parts/power_store/cell = each
 				do_sparks(5, 1, mach, mach)
 				cell.give(min(amount, cell.used_charge()))
-				playsound(mach, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(mach, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				parent_relic.lightning_fx(mach, stunner)
 		else
 			if (isliving(target))
@@ -486,7 +486,7 @@
 		new /obj/effect/decal/cleanable/blood/old(get_turf(m))
 		if (istype(m, /mob/living/carbon/))
 			var/mob/living/carbon/c = m
-			playsound(parent_relic, SFX_DESECRATION, 50, TRUE)
+			playsound(parent_relic, /datum/sound_effect/desecration, 50, TRUE)
 			if (prob(80)) // Just blood.. blood..
 				c.blood_volume -= amount
 				to_chat(c, span_bolddanger("[parent_relic] drains some of your succulent lifeforce!"))

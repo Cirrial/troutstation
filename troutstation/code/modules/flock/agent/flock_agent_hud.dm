@@ -40,7 +40,7 @@
 	// hacky "find the inventory slot I care about" logic
 	// the internal storage slot needs to be handled specially for appearance updates
 	for(var/atom/movable/screen/inventory/inv in screen_groups[HUD_GROUP_STATIC] + screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY])
-		if(inv.slot_id && inv.slot_id == ITEM_SLOT_DEX_STORAGE)
+		if(inv.slot_id && inv.slot_id == ITEM_SLOT_SUITSTORE)
 			internal = inv
 
 /datum/inventory_slot/flock_agent
@@ -50,7 +50,7 @@
 	name = "internal storage"
 	icon_state = "internal"
 	screen_loc = ui_flock_storage
-	slot_id = ITEM_SLOT_DEX_STORAGE
+	slot_id = ITEM_SLOT_SUITSTORE
 	screen_type = /atom/movable/screen/inventory/flock_internal
 
 /datum/inventory_slot/flock_agent/hat
