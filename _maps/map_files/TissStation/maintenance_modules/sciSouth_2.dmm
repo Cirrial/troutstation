@@ -131,12 +131,6 @@
 "id" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
-"jm" = (
-/obj/machinery/conveyor/auto/inverted{
-	dir = 10
-	},
-/turf/closed/wall/r_wall,
-/area/station/maintenance/department/science/south)
 "kU" = (
 /obj/machinery/conveyor/auto{
 	dir = 4
@@ -1603,7 +1597,7 @@ gL
 gL
 Tf
 cQ
-jm
+FX
 vP
 id
 id
