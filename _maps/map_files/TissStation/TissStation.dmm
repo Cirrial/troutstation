@@ -7686,7 +7686,7 @@
 "cun" = (
 /obj/structure/table/wood,
 /obj/item/book/bible,
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/kiddie/badger{
 	pixel_x = -32
 	},
 /turf/open/floor/carpet/black,
@@ -11808,7 +11808,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/medical/morgue)
 "dDS" = (
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -15877,9 +15877,7 @@
 /area/station/engineering/atmos)
 "eQy" = (
 /obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /obj/machinery/door/firedoor,
 /obj/machinery/light/floor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -23265,6 +23263,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "hea" = (
@@ -43729,6 +43728,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "mZx" = (
@@ -45659,6 +45659,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "nDt" = (
@@ -78050,6 +78051,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "xJd" = (
@@ -79346,9 +79348,7 @@
 /area/station/science/xenobiology)
 "yaw" = (
 /obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/light/floor,
