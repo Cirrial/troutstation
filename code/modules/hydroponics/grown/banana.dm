@@ -28,6 +28,8 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/banana/juice_typepath()
 	return /datum/reagent/consumable/banana
